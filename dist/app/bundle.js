@@ -60,7 +60,13 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 32);
 	var $ = __webpack_require__(/*! jquery */ 178);
-	var quote;
+	
+	var data = {};
+	
+	// class
+	
+	
+	// /////////////
 	$(document).ready(function () {
 		var Layout = function (_React$Component) {
 			_inherits(Layout, _React$Component);
@@ -70,7 +76,7 @@
 	
 				var _this = _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this, props));
 	
-				_this.state = {};
+				_this.state = { quoter: "", author: "" };
 				return _this;
 			}
 	
@@ -81,20 +87,9 @@
 						'div',
 						null,
 						React.createElement(
-							'h1',
-							null,
-							'Color Changer'
-						),
-						React.createElement(
 							'button',
-							{ onClick: this.changeBackgroundAndQuote },
+							{ className: 'btn btn-lg btn-primary', onClick: this.changeBackgroundAndQuote },
 							'Change Color'
-						),
-						React.createElement(
-							'p',
-							null,
-							'This paragraph ',
-							this.props.quote
 						)
 					);
 				}
@@ -104,25 +99,19 @@
 					var colorArray = ['#82E0AA', '#5DADE2', '#E8DAEF', '#F6DDCC', '#AEB6BF'];
 					var randomNumber = Math.floor(Math.random() * colorArray.length);
 					document.body.style.backgroundColor = colorArray[randomNumber];
-	
 					$.getJSON({
 						url: "http://quotes.stormconsultancy.co.uk/random.json"
 					}).then(function (data) {
-						console.log(data.quote);
+						$('.greeting-id').empty();
+						$('.greeting-content').empty();
+	
+						$('#tweet-quote').attr('href', 'https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=' + encodeURIComponent('"' + data.quote + '" ' + data.author));
 						$('.greeting-id').append(data.quote);
 						$('.greeting-content').append(data.author);
 					});
-					// console.log(quote);
+	
+					console.log(data.quote);
 				}
-	
-				// backgroundColor () {
-				// 	var colorArray = ['green', 'pink', 'yellow', 'blue', 'brown'];
-				// 	var randomNumber = Math.floor(Math.random() * colorArray.length);
-				// 	document.body.style.backgroundColor = colorArray[randomNumber];
-				// 	console.log(randomNumber);
-				// }
-	
-	
 			}]);
 	
 			return Layout;

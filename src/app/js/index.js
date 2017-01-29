@@ -4,57 +4,32 @@ var $ = require('jquery');
 
 var data = {};
 
-class
-
-
-// /////////////
-$(document).ready(function() {
-
-
-class Layout extends React.Component {
+class WeatherApp extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {quoter: "", author: ""};
+		this.state = {
+			weather : []
+		}
+		$.ajax({
+			url: "http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=1bf0c7372cfe1679eacd5906cefdf81d"
+		}).then((data) {
+			this.setState({ weather: data});
+		});
+
+		console.log(this.state.weather);
 	}
-
-
-	render() {
+	render () {
+		
 		return (
-			<div>
-				
-				<button className="btn btn-lg btn-primary" onClick={this.changeBackgroundAndQuote}>Change Color</button>
-			</div>
-		);
+			<h1>I showed up{this.state.weather}</h1>
+		)
 	}
-
-
-	changeBackgroundAndQuote () {
-		var colorArray = ['#82E0AA', '#5DADE2', '#E8DAEF', '#F6DDCC', '#AEB6BF'];
-		var randomNumber = Math.floor(Math.random() * colorArray.length);
-		document.body.style.backgroundColor = colorArray[randomNumber];
-			$.getJSON({
-	        url: "http://quotes.stormconsultancy.co.uk/random.json"
-	  }).then(function(data) {
-	  		$('.greeting-id').empty();
-		    $('.greeting-content').empty();
-
-
-		    $('#tweet-quote').attr('href', 'https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=' + encodeURIComponent('"' + data.quote + '" ' + data.author));
-		    $('.greeting-id').append(data.quote);
-		    $('.greeting-content').append(data.author);
-		  });
-
-	  console.log(data.quote);
-	}
-
-
 }
 
+
+// ////////////
 
 
 
 const app = document.getElementById('app');
-ReactDOM.render(<Layout/>, app);
-
-
-});
+ReactDOM.render(<WeatherApp />, app);
